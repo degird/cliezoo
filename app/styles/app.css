@@ -1,0 +1,15 @@
+/*
+ * App stylesheet (handle cliezoo-ui): Tailwind v4 compiled at build time,
+ * loaded only on /dash routes (never in wp-admin).
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "@fontsource-variable/inter/wght.css";
+@import "./tokens.css";
+@import "./theme.css";
+@import "./docs.css";
+@source "../packages";
+@source "../shell";
+@source "../modules";

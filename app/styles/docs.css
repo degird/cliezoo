@@ -1,0 +1,499 @@
+/*
+ * Docs: how a doc reads, in the editor and on paper.
+ *
+ * Preflight strips headings, lists and tables of their look; a doc needs
+ * them back, inside .cz-doc only.
+ */
+/* stylelint-disable selector-class-pattern -- ProseMirror, Tiptap and highlight.js name their own classes (ProseMirror, selectedCell, hljs-built_in). */
+/* stylelint-disable no-descending-specificity -- The selectors that look alike match different elements. */
+@layer components {
+
+	.cz-doc {
+		font-size: 0.9375rem;
+		line-height: 1.65;
+		color: var(--cz-text);
+		overflow-wrap: anywhere;
+
+		--cz-doc-gray: #6b7280;
+		--cz-doc-red: #dc2626;
+		--cz-doc-orange: #ea580c;
+		--cz-doc-yellow: #ca8a04;
+		--cz-doc-green: #16a34a;
+		--cz-doc-blue: #2563eb;
+		--cz-doc-purple: #9333ea;
+		--cz-doc-pink: #db2777;
+	}
+
+	.cz-doc > * + *,
+	.cz-doc .cz-column > * + *,
+	.cz-doc .cz-callout > * + * {
+		margin-top: 0.6em;
+	}
+
+	.cz-doc h1,
+	.cz-doc h2,
+	.cz-doc h3 {
+		font-weight: 650;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
+		scroll-margin-top: 4rem;
+	}
+
+	.cz-doc h1 {
+		font-size: 1.75em;
+		margin-top: 1.2em;
+	}
+
+	.cz-doc h2 {
+		font-size: 1.4em;
+		margin-top: 1.1em;
+	}
+
+	.cz-doc h3 {
+		font-size: 1.15em;
+		margin-top: 1em;
+	}
+
+	.cz-doc h4,
+	.cz-doc h5,
+	.cz-doc h6 {
+		font-weight: 600;
+		line-height: 1.35;
+		margin-top: 0.9em;
+		scroll-margin-top: 4rem;
+	}
+
+	.cz-doc h4 {
+		font-size: 1.05em;
+	}
+
+	.cz-doc h5 {
+		font-size: 1em;
+	}
+
+	.cz-doc h6 {
+		font-size: 0.9em;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.cz-doc > :first-child {
+		margin-top: 0;
+	}
+
+	.cz-doc a {
+		color: var(--cz-accent-text);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.cz-doc ul {
+		list-style: disc;
+		padding-inline-start: 1.5em;
+	}
+
+	.cz-doc ol {
+		list-style: decimal;
+		padding-inline-start: 1.5em;
+	}
+
+	.cz-doc li > p {
+		margin: 0;
+	}
+
+	.cz-doc ul[data-type="taskList"] {
+		list-style: none;
+		padding-inline-start: 0.25em;
+	}
+
+	.cz-doc ul[data-type="taskList"] li {
+		display: flex;
+		gap: 0.5em;
+		align-items: flex-start;
+	}
+
+	.cz-doc ul[data-type="taskList"] li > label,
+	.cz-doc ul[data-type="taskList"] li > .cz-check {
+		flex: none;
+		margin-top: 0.2em;
+	}
+
+	.cz-doc ul[data-type="taskList"] li > div {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.cz-doc ul[data-type="taskList"] li[data-checked="true"] > div {
+		color: var(--cz-text-muted);
+		text-decoration: line-through;
+	}
+
+	/* 24px: the smallest thing WCAG 2.2 asks somebody to hit. */
+	.cz-doc input[type="checkbox"] {
+		width: 1.5rem;
+		height: 1.5rem;
+		accent-color: var(--cz-accent);
+	}
+
+	.cz-doc blockquote {
+		border-inline-start: 3px solid var(--color-line-strong);
+		padding-inline-start: 0.9em;
+		color: var(--cz-text-muted);
+	}
+
+	.cz-doc hr {
+		border: 0;
+		border-top: 1px solid var(--color-line);
+		margin-block: 1.2em;
+	}
+
+	.cz-doc code {
+		font-family: var(--cz-font-mono);
+		font-size: 0.875em;
+		background: var(--cz-surface-sunken);
+		border-radius: var(--cz-radius-sm);
+		padding: 0.1em 0.3em;
+	}
+
+	.cz-doc pre {
+		font-family: var(--cz-font-mono);
+		font-size: 0.8125rem;
+		line-height: 1.55;
+		background: var(--cz-surface-sunken);
+		border-radius: var(--cz-radius);
+		padding: 0.8em 1em;
+		overflow-x: auto;
+		overflow-wrap: normal;
+	}
+
+	.cz-doc pre code {
+		background: none;
+		padding: 0;
+		font-size: inherit;
+	}
+
+	.cz-doc table {
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+		overflow: hidden;
+	}
+
+	.cz-doc td,
+	.cz-doc th {
+		border: 1px solid var(--color-line);
+		padding: 0.35em 0.6em;
+		vertical-align: top;
+		position: relative;
+		min-width: 4em;
+	}
+
+	.cz-doc th {
+		background: var(--cz-surface-sunken);
+		font-weight: 600;
+		text-align: start;
+	}
+
+	.cz-doc td > p,
+	.cz-doc th > p {
+		margin: 0;
+	}
+
+	.cz-doc .selectedCell::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: color-mix(in srgb, var(--cz-accent) 14%, transparent);
+		pointer-events: none;
+	}
+
+	.cz-doc .column-resize-handle {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-end: -2px;
+		width: 4px;
+		background: var(--cz-accent);
+		pointer-events: none;
+	}
+
+	.cz-doc .tableWrapper {
+		overflow-x: auto;
+	}
+
+	.cz-doc .resize-cursor {
+		cursor: col-resize;
+	}
+
+	.cz-doc [data-type="details"] {
+		display: flex;
+		gap: 0.35em;
+		align-items: flex-start;
+	}
+
+	.cz-doc [data-type="details"] > button {
+		flex: none;
+		width: 1.5rem;
+		height: 1.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--cz-text-muted);
+	}
+
+	.cz-doc [data-type="details"] > button::before {
+		content: "\25B8";
+		transition: transform 0.15s;
+	}
+
+	.cz-doc [data-type="details"].is-open > button::before {
+		transform: rotate(90deg);
+	}
+
+	.cz-doc [data-type="details"] > div {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.cz-doc details.cz-details > summary {
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.cz-doc [data-type="details"] summary {
+		font-weight: 600;
+		list-style: none;
+	}
+
+	.cz-doc [data-type="details"] summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.cz-doc [data-type="details"]:not(.is-open) > div > [data-type="detailsContent"] {
+		display: none;
+	}
+
+	.cz-doc .cz-callout {
+		border-radius: var(--cz-radius);
+		padding: 0.75em 1em;
+		background: var(--color-info-subtle);
+		border-inline-start: 3px solid var(--color-info);
+	}
+
+	.cz-doc .cz-callout[data-tone="success"] {
+		background: var(--color-success-subtle);
+		border-color: var(--color-success);
+	}
+
+	.cz-doc .cz-callout[data-tone="warning"] {
+		background: var(--color-warning-subtle);
+		border-color: var(--color-warning);
+	}
+
+	.cz-doc .cz-callout[data-tone="danger"] {
+		background: var(--color-danger-subtle);
+		border-color: var(--color-danger);
+	}
+
+	.cz-doc .cz-callout[data-tone="note"] {
+		background: var(--cz-surface-sunken);
+		border-color: var(--color-line-strong);
+	}
+
+	.cz-doc .cz-columns {
+		display: grid;
+		gap: 1.25em;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.cz-doc .cz-columns[data-count="3"] {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.cz-doc .cz-columns[data-count="4"] {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	@media (max-width: 640px) {
+
+		.cz-doc .cz-columns,
+		.cz-doc .cz-columns[data-count] {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.cz-doc .cz-column {
+		min-width: 0;
+	}
+
+	.cz-doc [data-mention] {
+		color: var(--cz-accent-text);
+		background: var(--cz-accent-subtle);
+		border-radius: var(--cz-radius-sm);
+		padding: 0 0.2em;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.cz-doc mark {
+		color: inherit;
+		border-radius: 2px;
+		padding: 0 0.05em;
+		background: color-mix(in srgb, #facc15 40%, transparent);
+	}
+
+	.cz-doc [data-hl="gray"] { background: color-mix(in srgb, #9ca3af 35%, transparent); }
+
+	.cz-doc [data-hl="red"] { background: color-mix(in srgb, #f87171 35%, transparent); }
+
+	.cz-doc [data-hl="orange"] { background: color-mix(in srgb, #fb923c 35%, transparent); }
+
+	.cz-doc [data-hl="green"] { background: color-mix(in srgb, #4ade80 35%, transparent); }
+
+	.cz-doc [data-hl="blue"] { background: color-mix(in srgb, #60a5fa 35%, transparent); }
+
+	.cz-doc [data-hl="purple"] { background: color-mix(in srgb, #c084fc 35%, transparent); }
+
+	.cz-doc [data-hl="pink"] { background: color-mix(in srgb, #f472b6 35%, transparent); }
+
+	/*
+	 * The colours a doc may use, named. A doc is read on a white page and
+	 * on a near-black one, and a colour that reads on one does not read on
+	 * the other: these are the same names with two sets of values, so the
+	 * text a writer coloured — and the code the editor colours for them —
+	 * keeps its 4.5:1 either way.
+	 */
+	[data-theme="dark"] .cz-doc {
+		--cz-doc-gray: #9ca3af;
+		--cz-doc-red: #f87171;
+		--cz-doc-orange: #fb923c;
+		--cz-doc-yellow: #facc15;
+		--cz-doc-green: #4ade80;
+		--cz-doc-blue: #60a5fa;
+		--cz-doc-purple: #c084fc;
+		--cz-doc-pink: #f472b6;
+	}
+
+	.cz-doc [data-color="gray"] { color: var(--cz-doc-gray); }
+
+	.cz-doc [data-color="red"] { color: var(--cz-doc-red); }
+
+	.cz-doc [data-color="orange"] { color: var(--cz-doc-orange); }
+
+	.cz-doc [data-color="yellow"] { color: var(--cz-doc-yellow); }
+
+	.cz-doc [data-color="green"] { color: var(--cz-doc-green); }
+
+	.cz-doc [data-color="blue"] { color: var(--cz-doc-blue); }
+
+	.cz-doc [data-color="purple"] { color: var(--cz-doc-purple); }
+
+	.cz-doc [data-color="pink"] { color: var(--cz-doc-pink); }
+
+	/* Code colours (highlight.js class names). */
+	.cz-doc .hljs-comment,
+	.cz-doc .hljs-quote { color: var(--cz-text-subtle); font-style: italic; }
+
+	.cz-doc .hljs-keyword,
+	.cz-doc .hljs-selector-tag,
+	.cz-doc .hljs-built_in { color: var(--cz-doc-purple); }
+
+	.cz-doc .hljs-string,
+	.cz-doc .hljs-attr,
+	.cz-doc .hljs-template-tag { color: var(--cz-doc-green); }
+
+	.cz-doc .hljs-number,
+	.cz-doc .hljs-literal { color: var(--cz-doc-orange); }
+
+	.cz-doc .hljs-title,
+	.cz-doc .hljs-section,
+	.cz-doc .hljs-name { color: var(--cz-doc-blue); }
+
+	.cz-doc .hljs-variable,
+	.cz-doc .hljs-type { color: var(--cz-doc-pink); }
+
+	/* The editor's own bits. */
+	.cz-doc.ProseMirror {
+		outline: none;
+		min-height: 12rem;
+		padding-bottom: 6rem;
+	}
+
+	.cz-doc p.is-empty::before,
+	.cz-doc .is-empty.is-editor-empty::before {
+		content: attr(data-placeholder);
+		float: inline-start;
+		height: 0;
+		color: var(--cz-text-subtle);
+		pointer-events: none;
+	}
+
+	.cz-doc .ProseMirror-selectednode {
+		outline: 2px solid var(--cz-accent);
+		outline-offset: 2px;
+		border-radius: var(--cz-radius-sm);
+	}
+
+	.cz-doc .ProseMirror-gapcursor::after {
+		border-top-color: var(--cz-text);
+	}
+
+	.cz-doc [data-block-target] {
+		background: color-mix(in srgb, var(--cz-accent) 10%, transparent);
+		border-radius: var(--cz-radius-sm);
+		transition: background 1.5s ease-out;
+	}
+}
+
+/* On paper: the doc and nothing around it. */
+@media print {
+
+	body.cliezoo-app * {
+		visibility: hidden;
+	}
+
+	body.cliezoo-app .cz-print,
+	body.cliezoo-app .cz-print * {
+		visibility: visible;
+	}
+
+	body.cliezoo-app .cz-print {
+		position: absolute;
+		inset: 0 auto auto 0;
+		width: 100%;
+		padding: 0;
+		background: #fff;
+		color: #000;
+	}
+
+	body.cliezoo-app .cz-no-print {
+		display: none !important;
+	}
+
+	/* Everything the doc sits in grows with it, so no scroll box cuts it
+	   off at one screen. */
+	body.cliezoo-app :has(.cz-print) {
+		height: auto !important;
+		max-height: none !important;
+		overflow: visible !important;
+	}
+
+	/* Closed toggles open on paper. */
+	.cz-doc [data-type="details"]:not(.is-open) > div > [data-type="detailsContent"] {
+		display: block;
+	}
+
+	.cz-doc a {
+		color: inherit;
+	}
+
+	.cz-doc iframe {
+		display: none;
+	}
+
+	.cz-doc pre,
+	.cz-doc table,
+	.cz-doc figure,
+	.cz-doc .cz-callout {
+		break-inside: avoid;
+	}
+}

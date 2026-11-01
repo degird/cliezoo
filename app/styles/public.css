@@ -1,0 +1,61 @@
+/*
+ * Public token pages (/cz): a small stylesheet with only what those pages use.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "@fontsource-variable/inter/wght.css";
+@import "./tokens.css";
+@import "./theme.css";
+@source "../public";
+@source "../packages/ui";
+@source "../packages/app/documents";
+
+/*
+ * Keeping a copy.
+ *
+ * A client had no way to keep what they were sent — not a download and not even
+ * a print. The studio's own screens have a print path; the public pages, which
+ * are the ones a client sees, had nothing. Every browser turns this into a PDF,
+ * on every platform, which is a better answer than a server-rendered file for
+ * everything except the signature certificate (decision S02).
+ */
+@media print {
+
+	.cz-no-print {
+		display: none !important;
+	}
+
+	/* Ink on paper rather than a dark theme's background. */
+	.cz-print {
+		max-width: none;
+		border: 0;
+		border-radius: 0;
+		padding: 0;
+		background: #fff;
+		color: #000;
+		box-shadow: none;
+	}
+
+	.cz-print a {
+		color: #000;
+		text-decoration: none;
+	}
+
+	/* A link's address is worth having on paper, where it cannot be clicked. */
+	.cz-print a[href^="http"]::after {
+		content: " (" attr( href ) ")";
+		font-size: 0.75em;
+		word-break: break-all;
+	}
+
+	/* Nothing splits across a page break in the middle of a thought. */
+	.cz-print h1,
+	.cz-print h2,
+	.cz-print h3,
+	.cz-print tr,
+	.cz-print blockquote {
+		break-inside: avoid;
+	}
+}

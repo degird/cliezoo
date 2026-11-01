@@ -1,0 +1,293 @@
+/*
+ * Cliezoo design tokens (Blueprint §12.4). Light is the default; dark comes
+ * from data-theme="dark" on <html>, set before first paint. Branding can
+ * override --cz-accent* at runtime (white-label), with contrast checked.
+ */
+.cliezoo-html,
+.cliezoo-app {
+	--cz-blue-50: #edf3ff;
+	--cz-blue-100: #d9e6fe;
+	--cz-blue-200: #b4cdfe;
+	--cz-blue-300: #82acfd;
+	--cz-blue-400: #4a87fc;
+	--cz-blue-500: #226cfb;
+	--cz-blue-600: #0458fb;
+	--cz-blue-700: #034bd5;
+	--cz-blue-800: #033eb0;
+	--cz-blue-900: #02328F;
+	--cz-blue-950: #02266c;
+
+	--cz-accent: var(--cz-blue-600);
+	--cz-accent-hover: var(--cz-blue-700);
+	--cz-accent-text: var(--cz-blue-600);
+	--cz-accent-subtle: var(--cz-blue-50);
+	--cz-accent-contrast: #fff;
+	--cz-focus-ring: var(--cz-blue-600);
+
+	--cz-bg: #fff;
+	--cz-surface: #f7f8fa;
+	--cz-surface-raised: #fff;
+	--cz-surface-sunken: #eef1f5;
+	--cz-overlay: rgb(15 23 42 / 0.45);
+	--cz-border: #e2e8f0;
+	--cz-border-strong: #cbd5e1;
+	--cz-text: #0f172a;
+	--cz-text-muted: #475569;
+	--cz-text-subtle: #5f6b7e; /* 4.5:1 or more on every light surface (WCAG AA). */
+
+	/* Green and amber 800, not 700: 700 is 4.43:1 on the sunken surface a
+	   hovered row or tile takes, which is under AA. */
+	--cz-success: #166534;
+	--cz-success-subtle: #f0fdf4;
+	--cz-warning: #92400e;
+	--cz-warning-subtle: #fffbeb;
+	--cz-danger: #b91c1c;
+	--cz-danger-subtle: #fef2f2;
+	--cz-info: #0369a1;
+	--cz-info-subtle: #f0f9ff;
+
+
+	--cz-radius-sm: 0.25rem;
+	--cz-radius: 0.5rem;
+	--cz-radius-lg: 0.75rem;
+	--cz-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+	--cz-shadow: 0 4px 12px rgb(15 23 42 / 0.08), 0 1px 2px rgb(15 23 42 / 0.06);
+	--cz-shadow-lg: 0 16px 40px rgb(15 23 42 / 0.16);
+	--cz-duration: 150ms;
+	--cz-font: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Bengali", "Noto Sans Arabic", sans-serif;
+	--cz-font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+	--cz-sidebar-width: 15rem;
+	--cz-sidebar-collapsed: 3.5rem;
+	--cz-topbar-height: 3.5rem;
+
+	color-scheme: light;
+}
+
+[data-theme="dark"] .cliezoo-app,
+[data-theme="dark"].cliezoo-html {
+	--cz-accent: var(--cz-blue-600);
+
+	/*
+	 * Darker on hover here too, although the page is dark: what is written
+	 * on the accent is white in both themes, and white on blue 500 is
+	 * 4.56:1, barely over the line, where 700 is 7.07:1. A button that is
+	 * hard to read while the pointer is on it is still hard to read.
+	 */
+	--cz-accent-hover: var(--cz-blue-700);
+
+	/*
+	 * Blue 300, not 400: accent text is drawn on the accent's own subtle
+	 * background as well as on the page — the selected item in the
+	 * sidebar is exactly that — and 400 on 950 comes to 4.12:1, which is
+	 * under the 4.5 AA asks for at this size.
+	 */
+	--cz-accent-text: var(--cz-blue-300);
+	--cz-accent-subtle: var(--cz-blue-950);
+	--cz-focus-ring: var(--cz-blue-400);
+
+	--cz-bg: #0b1220;
+	--cz-surface: #111a2e;
+	--cz-surface-raised: #16213a;
+	--cz-surface-sunken: #080e1a;
+	--cz-overlay: rgb(2 6 23 / 0.65);
+	--cz-border: #1e293b;
+	--cz-border-strong: #334155;
+	--cz-text: #e6eaf2;
+	--cz-text-muted: #94a3b8;
+	--cz-text-subtle: #7c8aa0;
+
+	--cz-success: #4ade80;
+	--cz-success-subtle: #052e16;
+	--cz-warning: #fbbf24;
+	--cz-warning-subtle: #2a1a03;
+	--cz-danger: #f87171;
+	--cz-danger-subtle: #2c0b0b;
+	--cz-info: #38bdf8;
+	--cz-info-subtle: #04223a;
+
+
+	--cz-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+	--cz-shadow: 0 4px 12px rgb(0 0 0 / 0.45);
+	--cz-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6);
+
+	color-scheme: dark;
+}
+
+.cliezoo-app[data-density="compact"] {
+	--cz-row-height: 2rem;
+}
+
+.cliezoo-app[data-font="system"] {
+	--cz-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+
+/* Corner style, chosen in Settings → Branding. */
+
+.cliezoo-app[data-radius="none"] {
+	--cz-radius-sm: 0;
+	--cz-radius: 0;
+	--cz-radius-lg: 0;
+}
+
+.cliezoo-app[data-radius="sm"] {
+	--cz-radius-sm: 0.125rem;
+	--cz-radius: 0.25rem;
+	--cz-radius-lg: 0.375rem;
+}
+
+.cliezoo-app[data-radius="lg"] {
+	--cz-radius-sm: 0.375rem;
+	--cz-radius: 0.75rem;
+	--cz-radius-lg: 1rem;
+}
+
+/*
+ * Workspace backgrounds, chosen in Settings → Branding. Each is a gradient
+ * laid thinly over the page colour, so text keeps its contrast and nothing
+ * is fetched from anywhere. The page body, the app's content column and the
+ * sign-in screen (.cz-backdrop) all show it.
+ */
+
+.cliezoo-app[data-background="soft"],
+.cliezoo-app [data-background="soft"] {
+	--cz-backdrop: radial-gradient(60rem 40rem at 50% -10%, color-mix(in oklab, var(--cz-accent) 12%, transparent), transparent);
+}
+
+.cliezoo-app[data-background="mesh"],
+.cliezoo-app [data-background="mesh"] {
+	--cz-backdrop:
+		radial-gradient(40rem 30rem at 10% -10%, color-mix(in oklab, var(--cz-accent) 18%, transparent), transparent),
+		radial-gradient(35rem 25rem at 90% 10%, color-mix(in oklab, var(--cz-accent) 10%, transparent), transparent);
+}
+
+.cliezoo-app[data-background="soft_rose"],
+.cliezoo-app [data-background="soft_rose"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(244 114 182 / 0.16), rgb(253 164 175 / 0.1) 55%, transparent);
+}
+
+.cliezoo-app[data-background="flare"],
+.cliezoo-app [data-background="flare"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(241 39 17 / 0.12), rgb(245 175 25 / 0.14));
+}
+
+.cliezoo-app[data-background="vivid"],
+.cliezoo-app [data-background="vivid"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(131 58 180 / 0.12), rgb(253 29 29 / 0.08) 50%, rgb(252 176 69 / 0.12));
+}
+
+.cliezoo-app[data-background="aragon"],
+.cliezoo-app [data-background="aragon"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(176 106 179 / 0.14), rgb(69 104 220 / 0.14));
+}
+
+.cliezoo-app[data-background="sunset"],
+.cliezoo-app [data-background="sunset"] {
+	--cz-backdrop: linear-gradient(160deg, rgb(255 126 95 / 0.16), rgb(254 180 123 / 0.14) 60%, transparent);
+}
+
+.cliezoo-app[data-background="cheer_up"],
+.cliezoo-app [data-background="cheer_up"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(85 98 112 / 0.1), rgb(255 107 107 / 0.14));
+}
+
+.cliezoo-app[data-background="deja_vu"],
+.cliezoo-app [data-background="deja_vu"] {
+	--cz-backdrop: linear-gradient(135deg, rgb(168 192 255 / 0.22), rgb(63 43 150 / 0.1));
+}
+
+.cliezoo-app[data-background="dark_night"],
+.cliezoo-app [data-background="dark_night"] {
+	--cz-backdrop: linear-gradient(160deg, rgb(15 23 42 / 0.08), rgb(30 27 75 / 0.14));
+}
+
+[data-theme="dark"] .cliezoo-app[data-background="dark_night"],
+[data-theme="dark"] .cliezoo-app [data-background="dark_night"] {
+	--cz-backdrop: linear-gradient(160deg, rgb(2 6 23 / 0.6), rgb(30 27 75 / 0.45));
+}
+
+body.cliezoo-app,
+.cliezoo-app div:has(> #cliezoo-main),
+.cliezoo-app .cz-backdrop {
+	background-image: var(--cz-backdrop, none);
+	background-attachment: fixed;
+}
+
+/* A preset's own little sample, in the branding designer. */
+.cliezoo-app .cz-swatch {
+	background-image: var(--cz-backdrop, none);
+}
+
+/*
+ * Theme tokens (Settings → Branding): the navigation (top bar and the
+ * phone's bottom bar) and the sidebar. applyBranding() puts the colours on
+ * <html> as --cz-brand-* and a flag on <body> for each one that is set, in
+ * light and dark. Here each region reads its own values through the same
+ * tokens every utility uses, so nothing in the markup changes.
+ */
+
+:root:not([data-theme="dark"]) .cliezoo-app[data-sidebar-bg] div:has(> #cliezoo-nav) {
+	--cz-surface: var(--cz-brand-sidebar-bg);
+	--cz-surface-sunken: color-mix(in oklab, var(--cz-brand-sidebar-bg), var(--cz-text) 10%);
+	--cz-border: color-mix(in oklab, var(--cz-brand-sidebar-bg), var(--cz-text) 16%);
+}
+
+:root:not([data-theme="dark"]) .cliezoo-app[data-sidebar-text] div:has(> #cliezoo-nav) {
+	--cz-text: var(--cz-brand-sidebar-text);
+	--cz-text-muted: var(--cz-brand-sidebar-text);
+	--cz-text-subtle: color-mix(in oklab, var(--cz-brand-sidebar-text) 85%, var(--cz-surface));
+}
+
+:root:not([data-theme="dark"]) .cliezoo-app[data-sidebar-accent] div:has(> #cliezoo-nav) {
+	--cz-accent-text: var(--cz-brand-sidebar-accent);
+	--cz-accent-subtle: color-mix(in oklab, var(--cz-brand-sidebar-accent) 14%, var(--cz-surface));
+	--cz-focus-ring: var(--cz-brand-sidebar-accent);
+}
+
+:root[data-theme="dark"] .cliezoo-app[data-sidebar-bg-dark] div:has(> #cliezoo-nav) {
+	--cz-surface: var(--cz-brand-sidebar-bg-dark);
+	--cz-surface-sunken: color-mix(in oklab, var(--cz-brand-sidebar-bg-dark), var(--cz-text) 10%);
+	--cz-border: color-mix(in oklab, var(--cz-brand-sidebar-bg-dark), var(--cz-text) 16%);
+}
+
+:root[data-theme="dark"] .cliezoo-app[data-sidebar-text-dark] div:has(> #cliezoo-nav) {
+	--cz-text: var(--cz-brand-sidebar-text-dark);
+	--cz-text-muted: var(--cz-brand-sidebar-text-dark);
+	--cz-text-subtle: color-mix(in oklab, var(--cz-brand-sidebar-text-dark) 85%, var(--cz-surface));
+}
+
+:root[data-theme="dark"] .cliezoo-app[data-sidebar-accent-dark] div:has(> #cliezoo-nav) {
+	--cz-accent-text: var(--cz-brand-sidebar-accent-dark);
+	--cz-accent-subtle: color-mix(in oklab, var(--cz-brand-sidebar-accent-dark) 18%, var(--cz-surface));
+	--cz-focus-ring: var(--cz-brand-sidebar-accent-dark);
+}
+
+:root:not([data-theme="dark"]) .cliezoo-app[data-nav-text] div:has(> #cliezoo-main) > header,
+:root:not([data-theme="dark"]) .cliezoo-app[data-nav-text] div:has(> #cliezoo-main) ~ nav {
+	--cz-text: var(--cz-brand-nav-text);
+	--cz-text-muted: var(--cz-brand-nav-text);
+}
+
+:root:not([data-theme="dark"]) .cliezoo-app[data-nav-accent] div:has(> #cliezoo-main) > header,
+:root:not([data-theme="dark"]) .cliezoo-app[data-nav-accent] div:has(> #cliezoo-main) ~ nav {
+	--cz-accent-text: var(--cz-brand-nav-accent);
+	--cz-focus-ring: var(--cz-brand-nav-accent);
+}
+
+:root[data-theme="dark"] .cliezoo-app[data-nav-text-dark] div:has(> #cliezoo-main) > header,
+:root[data-theme="dark"] .cliezoo-app[data-nav-text-dark] div:has(> #cliezoo-main) ~ nav {
+	--cz-text: var(--cz-brand-nav-text-dark);
+	--cz-text-muted: var(--cz-brand-nav-text-dark);
+}
+
+:root[data-theme="dark"] .cliezoo-app[data-nav-accent-dark] div:has(> #cliezoo-main) > header,
+:root[data-theme="dark"] .cliezoo-app[data-nav-accent-dark] div:has(> #cliezoo-main) ~ nav {
+	--cz-accent-text: var(--cz-brand-nav-accent-dark);
+	--cz-focus-ring: var(--cz-brand-nav-accent-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.cliezoo-app {
+		--cz-duration: 0ms;
+	}
+}

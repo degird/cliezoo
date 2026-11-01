@@ -1,0 +1,73 @@
+{
+	"name": "cliezoo",
+	"version": "0.1.2",
+	"private": true,
+	"description": "Cliezoo client portal and business workspace (free plugin).",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://cliezoo.com/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/degird/cliezoo.git"
+	},
+	"bugs": {
+		"url": "https://github.com/degird/cliezoo/issues"
+	},
+	"scripts": {
+		"build": "node -e \"require('fs').rmSync('build',{recursive:true,force:true})\" && wp-scripts build --config webpack.config.js && node tools/scripts/aria-locales.js .",
+		"dev": "wp-scripts start --config webpack.config.js"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "^4.3.3",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.3",
+		"@testing-library/user-event": "^14.6.7",
+		"@types/react": "^18.3.31",
+		"@types/react-dom": "^18.3.7",
+		"@wordpress/dependency-extraction-webpack-plugin": "^6.55.0",
+		"@wordpress/scripts": "^35.0.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"tailwindcss": "^4.3.3"
+	},
+	"dependencies": {
+		"@date-fns/tz": "^1.5.0",
+		"@fontsource-variable/inter": "^5.3.0",
+		"@hookform/resolvers": "^5.9.1",
+		"@simplewebauthn/browser": "^14.0.0",
+		"@tanstack/react-query": "^5.103.1",
+		"@tanstack/react-router": "^1.170.38",
+		"@tanstack/react-table": "^9.2.4",
+		"@tanstack/react-virtual": "^3.14.13",
+		"@tiptap/core": "3.31.3",
+		"@tiptap/extension-bubble-menu": "3.31.3",
+		"@tiptap/extension-code-block-lowlight": "3.31.3",
+		"@tiptap/extension-details": "3.31.3",
+		"@tiptap/extension-highlight": "3.31.3",
+		"@tiptap/extension-list": "3.31.3",
+		"@tiptap/extension-mention": "3.31.3",
+		"@tiptap/extension-table": "3.31.3",
+		"@tiptap/extension-text-style": "3.31.3",
+		"@tiptap/extension-unique-id": "3.31.3",
+		"@tiptap/extensions": "3.31.3",
+		"@tiptap/pm": "3.31.3",
+		"@tiptap/react": "3.31.3",
+		"@tiptap/starter-kit": "3.31.3",
+		"@tiptap/suggestion": "3.31.3",
+		"@wordpress/api-fetch": "^7.55.0",
+		"@wordpress/block-editor": "^18.0.0",
+		"@wordpress/blocks": "^16.1.0",
+		"@wordpress/components": "^41.0.0",
+		"@wordpress/hooks": "^4.55.0",
+		"@wordpress/i18n": "^6.28.0",
+		"date-fns": "^4.4.0",
+		"dompurify": "^3.4.15",
+		"highlight.js": "11.12.0",
+		"lowlight": "3.3.0",
+		"lucide-react": "^1.47.0",
+		"qrcode-generator": "^2.0.4",
+		"react-aria-components": "^1.21.1",
+		"react-hook-form": "^7.88.0",
+		"zod": "^4.6.5",
+		"zustand": "^5.0.15"
+	}
+}

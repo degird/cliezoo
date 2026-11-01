@@ -1,0 +1,8 @@
+node_modules/
+vendor/
+vendor-prefixed/
+build/
+dist/
+.cache/
+*.log
+.DS_Store
